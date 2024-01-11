@@ -1,6 +1,5 @@
 package com.mashibing.apipassenger.interceptor;
 
-import com.mashibing.internalcommon.util.JwtUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -23,6 +22,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 // 不拦截的路径
                 .excludePathPatterns("/noauthTest")
                 .excludePathPatterns("/verification-code")
-                .excludePathPatterns("/verification-code-check");
+                .excludePathPatterns("/verification-code-check")
+                .excludePathPatterns("/token-refresh");
     }
 }
