@@ -1,12 +1,11 @@
-package com.mashibing.apipassenger.controller;
+package com.mashibing.serviceprice.controller;
 
-import com.mashibing.apipassenger.service.ForecastPriceService;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.request.ForecastPriceDTO;
+import com.mashibing.serviceprice.service.ForecastPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,10 +21,7 @@ public class ForecastPriceController {
         String depLatitude = forecastPriceDTO.getDepLatitude();
         String destLongitude = forecastPriceDTO.getDestLongitude();
         String destLatitude = forecastPriceDTO.getDestLatitude();
-        String cityCode = forecastPriceDTO.getCityCode();
-        String vehicleType = forecastPriceDTO.getVehicleType();
 
-        return forecastPriceService.forecastPrice(depLongitude, depLatitude, destLongitude,
-                destLatitude, cityCode, vehicleType);
+        return forecastPriceService.forecastPrice(depLongitude, depLatitude, destLongitude, destLatitude);
     }
 }
