@@ -13,7 +13,7 @@ public class DriectionController {
     @Autowired
     private DirectionService directionService;
 
-    @GetMapping("driving")
+    @GetMapping("/driving")
     public ResponseResult driving(@RequestBody ForecastPriceDTO forecastPriceDTO) {
         String depLongitude = forecastPriceDTO.getDepLongitude();
         String depLatitude = forecastPriceDTO.getDepLatitude();
