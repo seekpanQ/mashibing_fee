@@ -7,5 +7,10 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.91.128:3306/service-map?characterEncoding=utf-8&serverTimezone=GMT%2B8
+    username: root
+    password: 123456
 amap:
   key: ed08e6101b2e0e7f043a10a40849d95d
