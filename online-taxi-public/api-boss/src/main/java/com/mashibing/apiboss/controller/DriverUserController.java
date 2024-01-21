@@ -1,25 +1,21 @@
-package com.mashibing.servicedriveruser.controller;
+package com.mashibing.apiboss.controller;
 
+import com.mashibing.apiboss.service.DriverUserService;
 import com.mashibing.internalcommon.dto.DriverUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
-import com.mashibing.servicedriveruser.service.DriverUserService;
-import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@Slf4j
-public class UserController {
+public class DriverUserController {
 
     @Autowired
     private DriverUserService driverUserService;
 
-    @PostMapping("/user")
-    public ResponseResult addUser(@RequestBody DriverUser driverUser) {
-        log.info(JSONObject.fromObject(driverUser).toString());
+    @PostMapping("/driver-user")
+    public ResponseResult addDriverUser(@RequestBody DriverUser driverUser) {
         return driverUserService.addDriverUser(driverUser);
     }
 }
