@@ -16,7 +16,7 @@ public class MysqlGenerator {
     public static String userName = "root";
     public static String password = "123456";
     public static String author = "Lison";
-    public static String tableName = "car";
+    public static String tableName = "driver_car_binding_relationship";
     public static String globalDir = "E:\\study\\mashibing_fee\\code\\learning\\online-taxi-public\\service-driver-user\\src\\main\\java";
     public static String mapperPath = "E:\\study\\mashibing_fee\\code\\learning\\online-taxi-public\\service-driver-user\\src\\main\\java\\com\\mashibing\\servicedriveruser\\mapper";
     public static String parentDir = "com.mashibing.servicedriveruser";
