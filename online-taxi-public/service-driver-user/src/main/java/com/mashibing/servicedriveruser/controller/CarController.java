@@ -19,12 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2024-01-22
  */
 @RestController
-@RequestMapping("/car")
 public class CarController {
     @Autowired
     private CarService carService;
 
-    @PostMapping("/add")
+    @PostMapping("/car")
     public ResponseResult addCar(@RequestBody Car car) {
 
         return carService.addCar(car);
