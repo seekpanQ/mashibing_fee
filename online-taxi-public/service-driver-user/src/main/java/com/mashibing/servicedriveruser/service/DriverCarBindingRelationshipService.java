@@ -1,6 +1,6 @@
 package com.mashibing.servicedriveruser.service;
 
-import com.mashibing.internalcommon.DriverCarConstants;
+import com.mashibing.internalcommon.constant.DriverCarConstants;
 import com.mashibing.internalcommon.constant.CommonStatusEnum;
 import com.mashibing.internalcommon.dto.DriverCarBindingRelationship;
 import com.mashibing.internalcommon.dto.ResponseResult;
