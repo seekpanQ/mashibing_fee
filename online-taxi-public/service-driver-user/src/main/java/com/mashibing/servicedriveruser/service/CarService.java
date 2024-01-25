@@ -20,11 +20,10 @@ public class CarService {
 
     public ResponseResult addCar(Car car) {
         // 获得此车辆 对应 的 tid
-        String vehicleNo = car.getVehicleNo();
-        ResponseResult<TerminalResponse> terminalResponseResponseResult = serviceMapClient.addTerminal(vehicleNo);
-        TerminalResponse terminalResponse = terminalResponseResponseResult.getData();
-        String tid = terminalResponse.getTid();
+        ResponseResult<TerminalResponse> responseResult = serviceMapClient.addTerminal(car.getVehicleNo());
+        String tid = responseResult.getData().getTid();
         car.setTid(tid);
+
         LocalDateTime now = LocalDateTime.now();
         car.setGmtModified(now);
         car.setGmtCreate(now);
