@@ -23,8 +23,15 @@ public class CarService {
     private ServiceMapClient serviceMapClient;
 
     public ResponseResult addCar(Car car) {
+
+        LocalDateTime now = LocalDateTime.now();
+        car.setGmtModified(now);
+        car.setGmtCreate(now);
+        // 保存车辆
+        carMapper.insert(car);
+
         // 获得此车辆 对应 的 tid
-        ResponseResult<TerminalResponse> responseResult = serviceMapClient.addTerminal(car.getVehicleNo());
+        ResponseResult<TerminalResponse> responseResult = serviceMapClient.addTerminal(car.getVehicleNo(), car.getId() + "");
         String tid = responseResult.getData().getTid();
         car.setTid(tid);
 
@@ -36,10 +43,7 @@ public class CarService {
         car.setTrid(trid);
         car.setTrname(trname);
 
-        LocalDateTime now = LocalDateTime.now();
-        car.setGmtModified(now);
-        car.setGmtCreate(now);
-        carMapper.insert(car);
+        carMapper.updateById(car);
         return ResponseResult.success("");
     }
 
