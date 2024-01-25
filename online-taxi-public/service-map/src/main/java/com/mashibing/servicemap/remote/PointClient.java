@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+
 @Service
 @Slf4j
 public class PointClient {
@@ -57,7 +59,7 @@ public class PointClient {
         }
         url.append("%5D");
         System.out.println("高德地图请求：" + url.toString());
-        ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(url.toString(), null, String.class);
+        ResponseEntity<String> stringResponseEntity = restTemplate.postForEntity(URI.create(url.toString()), null, String.class);
         System.out.println("高德地图响应：" + stringResponseEntity.getBody());
 
         return ResponseResult.success("");
