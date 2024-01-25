@@ -14,3 +14,5 @@ spring:
     password: 123456
 amap:
   key: ed08e6101b2e0e7f043a10a40849d95d
+  #服务id，服务名称：测试2
+  sid: 1015322
