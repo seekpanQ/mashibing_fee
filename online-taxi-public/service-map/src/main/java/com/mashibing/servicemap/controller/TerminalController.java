@@ -16,8 +16,8 @@ public class TerminalController {
     private TerminalService terminalService;
 
     @PostMapping("/add")
-    public ResponseResult<TerminalResponse> add(@RequestParam String name) {
-        return terminalService.add(name);
+    public ResponseResult<TerminalResponse> add(@RequestParam String name, @RequestParam String desc) {
+        return terminalService.add(name, desc);
     }
 
 }
