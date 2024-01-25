@@ -24,7 +24,7 @@ public class TerminalClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ResponseResult add(String name) {
+    public ResponseResult<TerminalResponse> add(String name) {
         // &key=<用户的key>
         // 拼装请求的url
         StringBuilder url = new StringBuilder();
