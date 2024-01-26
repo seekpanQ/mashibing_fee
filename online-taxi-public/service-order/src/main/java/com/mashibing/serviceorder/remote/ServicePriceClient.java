@@ -1,5 +1,6 @@
 package com.mashibing.serviceorder.remote;
 
+import com.mashibing.internalcommon.dto.PriceRule;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.request.PriceRuleIsNewRequest;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,4 +13,7 @@ public interface ServicePriceClient {
 
     @RequestMapping(method = RequestMethod.POST, value = "/price-rule/is-new")
     public ResponseResult<Boolean> isNew(@RequestBody PriceRuleIsNewRequest priceRuleIsNewRequest);
+
+    @RequestMapping(method = RequestMethod.POST, value = "/price-rule/if-exists")
+    public ResponseResult<Boolean> ifPriceExists(@RequestBody PriceRule priceRule);
 }

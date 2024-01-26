@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mashibing.internalcommon.constant.CommonStatusEnum;
 import com.mashibing.internalcommon.dto.OrderConstants;
 import com.mashibing.internalcommon.dto.OrderInfo;
+import com.mashibing.internalcommon.dto.PriceRule;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.request.OrderRequest;
 import com.mashibing.internalcommon.request.PriceRuleIsNewRequest;
@@ -45,6 +46,11 @@ public class OrderInfoService {
         if (isBlackDevice(orderRequest)) {
             return ResponseResult.fail(CommonStatusEnum.DEVICE_IS_BLACK.getCode(),
                     CommonStatusEnum.DEVICE_IS_BLACK.getValue());
+        }
+
+        // 判断：下单的城市和计价规则是否正常
+        if (!isPriceRuleExists(orderRequest)) {
+            return ResponseResult.fail(CommonStatusEnum.CITY_SERVICE_NOT_SERVICE.getCode(), CommonStatusEnum.CITY_SERVICE_NOT_SERVICE.getValue());
         }
 
         // 判断乘客 是否有进行中的订单
@@ -112,5 +118,18 @@ public class OrderInfoService {
             stringRedisTemplate.opsForValue().setIfAbsent(deviceCodeKey, "1", 1L, TimeUnit.HOURS);
         }
         return false;
+    }
+
+    private boolean isPriceRuleExists(OrderRequest orderRequest) {
+        String fareType = orderRequest.getFareType();
+        int index = fareType.indexOf("$");
+        String cityCode = fareType.substring(0, index);
+        String vehicleType = fareType.substring(index + 1);
+
+        PriceRule priceRule = new PriceRule();
+        priceRule.setCityCode(cityCode);
+        priceRule.setVehicleType(vehicleType);
+        ResponseResult<Boolean> booleanResponseResult = servicePriceClient.ifPriceExists(priceRule);
+        return booleanResponseResult.getData();
     }
 }
