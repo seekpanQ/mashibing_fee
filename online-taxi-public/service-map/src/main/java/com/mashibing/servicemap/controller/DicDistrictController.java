@@ -12,7 +12,7 @@ public class DicDistrictController {
     @Autowired
     private DicDistrictService dicDistrictService;
 
-    @GetMapping("/dic-district")
+    @GetMapping("/district")
     public ResponseResult initDicDistrict(String keywords) {
 
         return dicDistrictService.initDicDistrict(keywords);
