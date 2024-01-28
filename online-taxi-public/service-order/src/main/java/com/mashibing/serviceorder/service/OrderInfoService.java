@@ -142,6 +142,14 @@ public class OrderInfoService {
                     continue radius;
                 } else {
                     log.info("车辆ID：" + carId + "找到了正在出车的司机");
+                    OrderDriverResponse orderDriverResponse = availableDriver.getData();
+                    Long driverId = orderDriverResponse.getDriverId();
+
+                    // 判断司机 是否有进行中的订单
+                    if (isDriverOrderGoingon(driverId) > 0) {
+                        continue;
+                    }
+                    // 退出，不在进行 司机的查找
                     break radius;
                 }
 
@@ -217,5 +225,30 @@ public class OrderInfoService {
         priceRule.setVehicleType(vehicleType);
         ResponseResult<Boolean> booleanResponseResult = servicePriceClient.ifPriceExists(priceRule);
         return booleanResponseResult.getData();
+    }
+
+    /**
+     * 判断是否有 业务中的订单
+     *
+     * @param driverId
+     * @return
+     */
+    private int isDriverOrderGoingon(Long driverId) {
+        // 判断有正在进行的订单不允许下单
+        QueryWrapper<OrderInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("driver_id", driverId);
+        queryWrapper.and(wrapper -> wrapper
+                .eq("order_status", OrderConstants.DRIVER_RECEIVE_ORDER)
+                .or().eq("order_status", OrderConstants.DRIVER_TO_PICK_UP_PASSENGER)
+                .or().eq("order_status", OrderConstants.DRIVER_ARRIVED_DEPARTURE)
+                .or().eq("order_status", OrderConstants.PICK_UP_PASSENGER)
+
+        );
+
+
+        Integer validOrderNumber = orderInfoMapper.selectCount(queryWrapper);
+        log.info("司机Id：" + driverId + ",正在进行的订单的数量：" + validOrderNumber);
+
+        return validOrderNumber;
     }
 }
