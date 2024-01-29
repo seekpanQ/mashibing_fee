@@ -12,6 +12,7 @@ import com.mashibing.serviceorder.mapper.OrderInfoMapper;
 import com.mashibing.serviceorder.remote.ServiceDriverUserClient;
 import com.mashibing.serviceorder.remote.ServiceMapClient;
 import com.mashibing.serviceorder.remote.ServicePriceClient;
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -147,33 +148,36 @@ public class OrderInfoService {
                     String licenseId = orderDriverResponse.getLicenseId();
                     String vehicleNo = orderDriverResponse.getVehicleNo();
 
-                    // 判断司机 是否有进行中的订单
-                    if (isDriverOrderGoingon(driverId) > 0) {
-                        continue;
+                    synchronized ((driverId + "").intern()) {
+                        // 判断司机 是否有进行中的订单
+                        if (isDriverOrderGoingon(driverId) > 0) {
+                            continue;
+                        }
+
+                        // 订单直接匹配司机
+                        // 查询当前车辆信息
+                        QueryWrapper<Car> carQueryWrapper = new QueryWrapper<>();
+                        carQueryWrapper.eq("id", carId);
+
+                        // 查询当前司机信息
+                        orderInfo.setDriverId(driverId);
+                        orderInfo.setDriverPhone(driverPhone);
+                        orderInfo.setCarId(carId);
+                        // 从地图中来
+                        orderInfo.setReceiveOrderCarLongitude(longitude);
+                        orderInfo.setReceiveOrderCarLatitude(latitude);
+
+                        orderInfo.setReceiveOrderTime(LocalDateTime.now());
+                        orderInfo.setLicenseId(licenseId);
+                        orderInfo.setVehicleNo(vehicleNo);
+                        orderInfo.setOrderStatus(OrderConstants.DRIVER_RECEIVE_ORDER);
+
+                        orderInfoMapper.updateById(orderInfo);
+
+                        // 退出，不在进行 司机的查找
+                        break radius;
+
                     }
-
-                    // 订单直接匹配司机
-                    // 查询当前车辆信息
-                    QueryWrapper<Car> carQueryWrapper = new QueryWrapper<>();
-                    carQueryWrapper.eq("id", carId);
-
-                    // 查询当前司机信息
-                    orderInfo.setDriverId(driverId);
-                    orderInfo.setDriverPhone(driverPhone);
-                    orderInfo.setCarId(carId);
-                    // 从地图中来
-                    orderInfo.setReceiveOrderCarLongitude(longitude);
-                    orderInfo.setReceiveOrderCarLatitude(latitude);
-
-                    orderInfo.setReceiveOrderTime(LocalDateTime.now());
-                    orderInfo.setLicenseId(licenseId);
-                    orderInfo.setVehicleNo(vehicleNo);
-                    orderInfo.setOrderStatus(OrderConstants.DRIVER_RECEIVE_ORDER);
-
-                    orderInfoMapper.updateById(orderInfo);
-
-                    // 退出，不在进行 司机的查找
-                    break radius;
                 }
 
 
