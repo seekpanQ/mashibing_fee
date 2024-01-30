@@ -100,8 +100,20 @@ public class OrderInfoService {
 
         orderInfoMapper.insert(orderInfo);
 
-        // 派单 dispatchRealTimeOrder
-        dispatchRealTimeOrder(orderInfo);
+        // 定时任务的处理
+        for (int i = 0; i < 6; i++) {
+            // 派单 dispatchRealTimeOrder
+            int result = dispatchRealTimeOrder(orderInfo);
+            if (result == 1) {
+                break;
+            }
+            // 等待20s
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         return ResponseResult.success("");
     }
@@ -111,8 +123,9 @@ public class OrderInfoService {
      *
      * @param orderInfo
      */
-    public void dispatchRealTimeOrder(OrderInfo orderInfo) {
-
+    public int dispatchRealTimeOrder(OrderInfo orderInfo) {
+        log.info("循环一次");
+        int result = 0;
         //2km
         String depLatitude = orderInfo.getDepLatitude();
         String depLongitude = orderInfo.getDepLongitude();
@@ -218,15 +231,12 @@ public class OrderInfoService {
                     passengerContent.put("receiveOrderCarLatitude", orderInfo.getReceiveOrderCarLatitude());
 
                     serviceSsePushClient.push(orderInfo.getPassengerId(), IdentityConstants.PASSENGER_IDENTITY, passengerContent.toString());
-
+                    result = 1;
                     lock.unlock();
                     // 退出，不在进行 司机的查找
                     break radius;
-
 //                    }
                 }
-
-
             }
 
             // 根据解析出来的终端，查询车辆信息
@@ -236,6 +246,7 @@ public class OrderInfoService {
             // 如果派单成功，则退出循环
 
         }
+        return result;
     }
 
     /**
