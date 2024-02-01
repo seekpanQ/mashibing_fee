@@ -38,6 +38,11 @@ public class AmapConfigConstants {
     public static final String TERMINAL_AROUNDSEARCH = "https://tsapi.amap.com/v1/track/terminal/aroundsearch";
 
     /**
+     * 查询轨迹结果（包括：路程和时长）
+     */
+    public static final String TERMINAL_TRSEARCH = "https://tsapi.amap.com/v1/track/terminal/trsearch";
+
+    /**
      * 路径规划 json key值
      */
     public static final String STATUS = "status";

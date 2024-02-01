@@ -22,4 +22,10 @@ public class TerminalService {
 
         return terminalClient.aroundsearch(center, radius);
     }
+
+    public ResponseResult trsearch(String tid, Long starttime, Long endtime) {
+
+        return terminalClient.trsearch(tid, starttime, endtime);
+    }
+
 }
