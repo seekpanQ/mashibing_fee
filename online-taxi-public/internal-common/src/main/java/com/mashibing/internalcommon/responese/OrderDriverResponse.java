@@ -19,4 +19,8 @@ public class OrderDriverResponse {
      * 车辆号牌
      */
     private String vehicleNo;
+    /**
+     * 车辆类型
+     */
+    private String vehicleType;
 }

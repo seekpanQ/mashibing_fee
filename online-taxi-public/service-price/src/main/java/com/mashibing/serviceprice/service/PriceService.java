@@ -15,19 +15,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Slf4j
-public class ForecastPriceService {
+public class PriceService {
 
     @Autowired
     private ServiceMapClient serviceMapClient;
     @Autowired
     private PriceRuleMapper priceRuleMapper;
 
+    /**
+     * 计算预估价格
+     *
+     * @param depLongitude
+     * @param depLatitude
+     * @param destLongitude
+     * @param destLatitude
+     * @param cityCode
+     * @param vehicleType
+     * @return
+     */
     public ResponseResult forecastPrice(String depLongitude, String depLatitude, String destLongitude,
                                         String destLatitude, String cityCode, String vehicleType) {
 
