@@ -44,4 +44,8 @@ public class ApiDriverOrderInfoService {
     public ResponseResult<OrderInfo> detail(Long orderId) {
         return serviceOrderClient.detail(orderId);
     }
+
+    public ResponseResult<OrderInfo> currentOrder(String phone, String driverIdentity) {
+        return serviceOrderClient.current(phone, driverIdentity);
+    }
 }

@@ -122,4 +122,9 @@ public class OrderInfoController {
 
         return orderInfoService.cancel(orderId, identity);
     }
+
+    @GetMapping("/current")
+    public ResponseResult current(String phone, String identity) {
+        return orderInfoService.current(phone, identity);
+    }
 }
