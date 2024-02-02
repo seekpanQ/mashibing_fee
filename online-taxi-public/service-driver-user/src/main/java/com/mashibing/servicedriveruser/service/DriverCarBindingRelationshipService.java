@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.mashibing.internalcommon.constant.DriverCarConstants;
 import com.mashibing.internalcommon.constant.CommonStatusEnum;
 import com.mashibing.internalcommon.dto.DriverCarBindingRelationship;
+import com.mashibing.internalcommon.dto.DriverUser;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.servicedriveruser.mapper.DriverCarBindingRelationshipMapper;
+import com.mashibing.servicedriveruser.mapper.DriverUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ import java.util.Map;
 public class DriverCarBindingRelationshipService {
     @Autowired
     private DriverCarBindingRelationshipMapper driverCarBindingRelationshipMapper;
+    @Autowired
+    private DriverUserMapper driverUserMapper;
 
     public ResponseResult bind(DriverCarBindingRelationship driverCarBindingRelationship) {
         // 判断，如果参数中的车辆和司机，已经做过绑定，则不允许再次绑定
@@ -77,5 +81,20 @@ public class DriverCarBindingRelationshipService {
         relationship.setUnBindingTime(now);
         driverCarBindingRelationshipMapper.updateById(relationship);
         return ResponseResult.success("");
+    }
+
+    public ResponseResult<DriverCarBindingRelationship> getDriverCarRelationShipByDriverPhone(String driverPhone) {
+        QueryWrapper<DriverUser> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("driver_phone", driverPhone);
+
+        DriverUser driverUser = driverUserMapper.selectOne(queryWrapper);
+        Long driverId = driverUser.getId();
+
+        QueryWrapper<DriverCarBindingRelationship> driverCarBindingRelationshipQueryWrapper = new QueryWrapper<>();
+        driverCarBindingRelationshipQueryWrapper.eq("driver_id", driverId);
+        driverCarBindingRelationshipQueryWrapper.eq("bind_state", DriverCarConstants.DRIVER_CAR_BIND);
+
+        DriverCarBindingRelationship driverCarBindingRelationship = driverCarBindingRelationshipMapper.selectOne(driverCarBindingRelationshipQueryWrapper);
+        return ResponseResult.success(driverCarBindingRelationship);
     }
 }
