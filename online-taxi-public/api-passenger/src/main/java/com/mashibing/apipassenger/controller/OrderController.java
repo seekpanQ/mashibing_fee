@@ -1,6 +1,7 @@
 package com.mashibing.apipassenger.controller;
 
 import com.mashibing.apipassenger.service.OrderService;
+import com.mashibing.internalcommon.dto.OrderInfo;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.request.OrderRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,11 @@ public class OrderController {
     @PostMapping("/cancel")
     public ResponseResult cancel(@RequestParam Long orderId) {
         return orderService.cancel(orderId);
+    }
+
+    @GetMapping("/detail")
+    public ResponseResult<OrderInfo> detail(Long orderId) {
+        return orderService.detail(orderId);
     }
 
 }
