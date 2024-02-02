@@ -171,7 +171,7 @@ public class OrderInfoService {
                         = serviceDriverUserClient.getAvailableDriver(carId);
                 if (availableDriver.getCode() == CommonStatusEnum.AVAILABLE_DRIVER_EMPTY.getCode()) {
                     log.info("没有车辆ID：" + carId + ",对于的司机");
-                    continue radius;
+                    continue;
                 } else {
                     log.info("车辆ID：" + carId + "找到了正在出车的司机");
                     OrderDriverResponse orderDriverResponse = availableDriver.getData();
@@ -188,7 +188,6 @@ public class OrderInfoService {
                         continue;
                     }
 
-//                    synchronized ((driverId + "").intern()) {
                     String lockKey = (driverId + "").intern();
                     RLock lock = redissonClient.getLock(lockKey);
                     lock.lock();
@@ -217,8 +216,9 @@ public class OrderInfoService {
                     orderInfo.setOrderStatus(OrderConstants.DRIVER_RECEIVE_ORDER);
 
                     orderInfoMapper.updateById(orderInfo);
-
+                    //通知司机
                     JSONObject driverContent = new JSONObject();
+                    driverContent.put("orderId", orderInfo.getId());
                     driverContent.put("passengerId", orderInfo.getPassengerId());
                     driverContent.put("passengerPhone", orderInfo.getPassengerPhone());
                     driverContent.put("departure", orderInfo.getDeparture());
@@ -233,6 +233,7 @@ public class OrderInfoService {
 
                     // 通知乘客
                     JSONObject passengerContent = new JSONObject();
+                    passengerContent.put("orderId", orderInfo.getId());
                     passengerContent.put("driverId", orderInfo.getDriverId());
                     passengerContent.put("driverPhone", orderInfo.getDriverPhone());
                     passengerContent.put("vehicleNo", orderInfo.getVehicleNo());
@@ -252,16 +253,8 @@ public class OrderInfoService {
                     lock.unlock();
                     // 退出，不在进行 司机的查找
                     break radius;
-//                    }
                 }
             }
-
-            // 根据解析出来的终端，查询车辆信息
-
-            // 找到符合的车辆，进行派单
-
-            // 如果派单成功，则退出循环
-
         }
         return result;
     }
