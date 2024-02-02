@@ -1,7 +1,8 @@
 package com.mashibing.internalcommon.dto;
 
 public class OrderConstants {
-
+    // 0：订单无效
+    public static final int ORDER_INVALID = 0;
     // 1：订单开始
     public static final int ORDER_START = 1;
     // 2：司机接单
