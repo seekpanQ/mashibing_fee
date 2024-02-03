@@ -1,8 +1,10 @@
 package com.mashibing.servicessepush.controller;
 
+import com.mashibing.internalcommon.request.PushRequest;
 import com.mashibing.internalcommon.util.SsePrefixUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -39,15 +41,15 @@ public class SseController {
     /**
      * 发送消息
      *
-     * @param content  消息内容
-     * @param userId   用户id
-     * @param identity 身份类型
-     * @param content  内容
+     * @param pushRequest
      * @return
      */
     @GetMapping("/push")
-    public String push(@RequestParam Long userId, @RequestParam String identity,
-                       @RequestParam String content) {
+    public String push(@RequestBody PushRequest pushRequest) {
+        Long userId = pushRequest.getUserId();
+        String identity = pushRequest.getIdentity();
+        String content = pushRequest.getContent();
+
         String sseMapKey = SsePrefixUtils.generatorSseKey(userId, identity);
         try {
             if (sseEmitterMap.containsKey(sseMapKey)) {
