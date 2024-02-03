@@ -5,10 +5,7 @@ import com.mashibing.internalcommon.dto.DriverUserWorkStatus;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.servicedriveruser.service.DriverUserWorkStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -28,6 +25,11 @@ public class DriverUserWorkStatusController {
     public ResponseResult changeWorkStatus(@RequestBody DriverUserWorkStatus driverUserWorkStatus) {
 
         return driverUserWorkStatusService.changeWorkStatus(driverUserWorkStatus.getDriverId(), driverUserWorkStatus.getWorkStatus());
+    }
+
+    @GetMapping("/work-status")
+    public ResponseResult<DriverUserWorkStatus> getWorkStatus(Long driverId) {
+        return driverUserWorkStatusService.getWorkStatus(driverId);
     }
 
 }

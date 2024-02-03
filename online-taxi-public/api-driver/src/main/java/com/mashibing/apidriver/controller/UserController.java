@@ -42,4 +42,9 @@ public class UserController {
 
     }
 
+    @GetMapping("/work-status")
+    public ResponseResult<DriverUserWorkStatus> getWorkStatus(@RequestParam Long driverId) {
+        return userService.getWorkStatus(driverId);
+    }
+
 }
