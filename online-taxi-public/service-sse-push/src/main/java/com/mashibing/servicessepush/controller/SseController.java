@@ -3,10 +3,7 @@ package com.mashibing.servicessepush.controller;
 import com.mashibing.internalcommon.request.PushRequest;
 import com.mashibing.internalcommon.util.SsePrefixUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
@@ -44,7 +41,7 @@ public class SseController {
      * @param pushRequest
      * @return
      */
-    @GetMapping("/push")
+    @PostMapping("/push")
     public String push(@RequestBody PushRequest pushRequest) {
         Long userId = pushRequest.getUserId();
         String identity = pushRequest.getIdentity();
