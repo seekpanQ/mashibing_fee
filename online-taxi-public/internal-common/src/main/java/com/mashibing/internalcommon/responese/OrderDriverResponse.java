@@ -1,13 +1,16 @@
 package com.mashibing.internalcommon.responese;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 @Data
 public class OrderDriverResponse {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long driverId;
 
     private String driverPhone;
-
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long carId;
 
     /**

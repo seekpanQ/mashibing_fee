@@ -1,5 +1,7 @@
 package com.mashibing.internalcommon.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -21,11 +23,13 @@ public class OrderInfo implements Serializable {
     /**
      * 订单ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     /**
      * 乘客ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long passengerId;
 
     /**
@@ -36,6 +40,7 @@ public class OrderInfo implements Serializable {
     /**
      * 司机ID
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long driverId;
 
     /**
@@ -46,6 +51,7 @@ public class OrderInfo implements Serializable {
     /**
      * 车辆Id
      */
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long carId;
 
     /**

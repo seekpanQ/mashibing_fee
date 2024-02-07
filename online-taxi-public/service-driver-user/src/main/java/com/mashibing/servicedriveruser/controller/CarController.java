@@ -5,10 +5,7 @@ import com.mashibing.internalcommon.dto.Car;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.servicedriveruser.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -30,7 +27,7 @@ public class CarController {
     }
 
     @GetMapping("/car")
-    public ResponseResult<Car> getCarById(Long carId) {
+    public ResponseResult<Car> getCarById(@RequestParam Long carId) {
 
         return carService.getCarById(carId);
     }

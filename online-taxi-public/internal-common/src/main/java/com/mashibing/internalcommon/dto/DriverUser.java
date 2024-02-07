@@ -1,6 +1,8 @@
 package com.mashibing.internalcommon.dto;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 public class DriverUser {
 
-
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
     private String address;
     private String driverName;
