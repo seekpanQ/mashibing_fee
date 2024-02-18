@@ -5,6 +5,7 @@ import com.mashibing.apipassenger.constraints.DateTimeRange;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import java.time.LocalDateTime;
@@ -14,11 +15,10 @@ public class OrderRequest {
     /**
      * 订单ID
      */
-    @NotBlank
     @Positive
     private Long orderId;
     // 乘客ID
-    @NotBlank(message = "乘客ID不能为空")
+    @NotNull
     @Positive
     private Long passengerId;
 
@@ -31,7 +31,8 @@ public class OrderRequest {
     private String address;
     // 出发时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeRange
+    @DateTimeRange(message = "出发时间不正确")
+    @NotNull
     private LocalDateTime departTime;
     // 下单时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

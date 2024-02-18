@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {DateTimeRangeValidator.class})
 public @interface DateTimeRange {
-    String message() default "时间格式不正确";
+    String message() default "时间不正确";
 
     String pattern() default "yyyy-MM-dd HH:mm:ss";
 
