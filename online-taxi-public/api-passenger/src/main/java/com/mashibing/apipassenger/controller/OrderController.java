@@ -1,12 +1,12 @@
 package com.mashibing.apipassenger.controller;
 
+import com.mashibing.apipassenger.request.OrderRequest;
 import com.mashibing.apipassenger.service.OrderService;
 import com.mashibing.internalcommon.constant.CommonStatusEnum;
 import com.mashibing.internalcommon.constant.IdentityConstants;
 import com.mashibing.internalcommon.dto.OrderInfo;
 import com.mashibing.internalcommon.dto.ResponseResult;
 import com.mashibing.internalcommon.dto.TokenResult;
-import com.mashibing.internalcommon.request.OrderRequest;
 import com.mashibing.internalcommon.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -30,7 +30,7 @@ public class OrderController {
      * @return
      */
     @PostMapping("/add")
-    public ResponseResult add(@RequestBody OrderRequest orderRequest) {
+    public ResponseResult add(@Validated @RequestBody OrderRequest orderRequest) {
         System.out.println(orderRequest);
         return orderService.add(orderRequest);
     }
