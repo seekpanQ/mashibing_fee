@@ -7,9 +7,11 @@ import java.time.format.DateTimeFormatter;
 
 public class DateTimeRangeValidator implements ConstraintValidator<DateTimeRange, Object> {
     private DateTimeRange dateTimeRange;
+    private String judge;
 
     @Override
     public void initialize(DateTimeRange constraintAnnotation) {
+        judge = constraintAnnotation.judge();
         ConstraintValidator.super.initialize(constraintAnnotation);
     }
 
@@ -29,9 +31,13 @@ public class DateTimeRangeValidator implements ConstraintValidator<DateTimeRange
         }
         LocalDateTime now = LocalDateTime.now();
         if (dateValue.isAfter(now)) {
-            return true;
+            if (judge.equals(DateTimeRange.IS_AFTER) && dateValue.isAfter(now)) {
+                return true;
+            }
+            if (judge.equals(DateTimeRange.IS_BEFORE) && dateValue.isBefore(now)) {
+                return true;
+            }
         }
         return false;
     }
-
 }
