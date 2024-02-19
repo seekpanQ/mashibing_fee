@@ -42,7 +42,7 @@ public class OrderController {
      * @return
      */
     @PostMapping("/cancel")
-    public ResponseResult cancel(@RequestParam Long orderId) {
+    public ResponseResult cancel(@NotNull(message = "订单id不能为空") @Positive(message = "订单id格式不正确") Long orderId) {
         return orderService.cancel(orderId);
     }
 
