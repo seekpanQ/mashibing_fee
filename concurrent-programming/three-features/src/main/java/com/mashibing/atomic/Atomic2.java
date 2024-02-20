@@ -1,4 +1,4 @@
-package com.mashibing;
+package com.mashibing.atomic;
 
 /**
  * **原子性的定义：原子性指一个操作是不可分割的，不可中断的，一个线程在执行时，另一个线程不会影响到他。**

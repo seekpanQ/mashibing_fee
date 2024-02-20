@@ -1,4 +1,4 @@
-package com.mashibing;
+package com.mashibing.atomic;
 
 import java.util.concurrent.atomic.AtomicStampedReference;
 
