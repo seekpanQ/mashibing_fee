@@ -11,6 +11,7 @@
   <url>http://maven.apache.org</url>
   <modules>
     <module>thread</module>
+      <module>three-features</module>
   </modules>
 
   <properties>
