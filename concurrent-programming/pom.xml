@@ -12,6 +12,7 @@
   <modules>
     <module>thread</module>
       <module>three-features</module>
+      <module>lock</module>
   </modules>
 
   <properties>
